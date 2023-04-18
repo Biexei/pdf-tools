@@ -30,23 +30,25 @@ def pdf_split(in_put_file: str, size_range: str, out_put_path: str) -> None:
     :param out_put_path: 拆分结果输出目录
     :return: None
     """
-    range_split = size_range.split("-")
-    start = int(range_split[0])
-    end = int(range_split[1])
-    writer = PdfFileWriter()
-    reader = PdfFileReader(open(file=in_put_file, mode='rb'))
-    page_size = reader.getNumPages()
-    if start < 1:
-        raise Exception("起始页参数错误")
-    if start > end:
-        raise Exception("参数错误")
-    if end > page_size:
-        raise Exception("截止页参数错误，超出最大页码数：%s" % str(page_size))
-    for i in range(start - 1, end):
-        writer.addPage(reader.getPage(i))
-    out_put_path = out_put_path + r"\\%s-%s.pdf" % (start, end)
-    with open(file=out_put_path, mode='wb'):
-        writer.write(out_put_path)
+    rg = size_range.split(",")
+    for _ in rg:
+        range_split = _.split("-")
+        start = int(range_split[0])
+        end = int(range_split[1])
+        writer = PdfFileWriter()
+        reader = PdfFileReader(open(file=in_put_file, mode='rb'))
+        page_size = reader.getNumPages()
+        if start < 1:
+            raise Exception("起始页参数错误")
+        if start > end:
+            raise Exception("参数错误")
+        if end > page_size:
+            raise Exception("截止页参数错误，超出最大页码数：%s" % str(page_size))
+        for i in range(start - 1, end):
+            writer.addPage(reader.getPage(i))
+        path = out_put_path + r"\\%s-%s.pdf" % (start, end)
+        with open(file=path, mode='wb'):
+            writer.write(path)
 
 
 class SiteLog(wx.Frame):
@@ -73,7 +75,7 @@ class SiteLog(wx.Frame):
         self.choose_btn.Bind(wx.EVT_BUTTON, self.on_open_file)
         self.size_range = wx.StaticText(self, label='区间', pos=(80, 245), size=(50, 25))
         self.size_range_value = wx.TextCtrl(self, pos=(140, 245), size=(230, 25))
-        self.size_range_value.SetHint("如1-3")
+        self.size_range_value.SetHint("如1-4，多个区间如1-3,3-4")
         self.split_btn = wx.Button(self, label='拆分', pos=(520, 200), size=(70, 70))
         self.split_btn.Bind(wx.EVT_BUTTON, self.on_split)
 
