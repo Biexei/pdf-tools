@@ -1,0 +1,14 @@
+altgraph==0.17.3
+dataclasses==0.8
+importlib-metadata==4.8.3
+numpy==1.19.5
+pefile==2023.2.7
+Pillow==8.4.0
+pyinstaller==4.10
+pyinstaller-hooks-contrib==2022.0
+pypdf2==2.12.1
+pywin32-ctypes==0.2.0
+six==1.16.0
+typing-extensions==4.1.1
+wxPython==4.1.1
+zipp==3.6.0
