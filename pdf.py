@@ -147,5 +147,6 @@ class SiteLog(wx.Frame):
 if __name__ == '__main__':
     app = wx.App()
     SiteFrame = SiteLog()
+    SiteFrame.Center()
     SiteFrame.Show()
     app.MainLoop()
